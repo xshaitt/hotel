@@ -12,13 +12,14 @@ use GuzzleHttp\Client;
 
 class Helpers
 {
-    public static function callApi($uri)
+    public static function callApi($uri, $data = [])
     {
         $host = env('MINSU_HOST');
         $data['head']['appKey'] = env('MINSU_APPKEY');
         $data['head']['salt'] = env('MINSU_SALT');
         $data['head']['sign'] = md5(md5(env('MINSU_SECRETKEY') . $data['head']['appKey']) . $data['head']['salt']);
         $data['head']['version'] = env('MINSU_VERSION');
+        $data['data'] = $data;
         $reqData = json_encode($data);
         $client = new Client();
         $response = $client->get("{$host}{$uri}?reqData={$reqData}");

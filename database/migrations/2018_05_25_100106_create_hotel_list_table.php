@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCitysTable extends Migration
+class CreateHotelListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateCitysTable extends Migration
      */
     public function up()
     {
-        Schema::create('citys', function (Blueprint $table) {
+        Schema::create('hotel_list', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('provinceId')->nullable();
-            $table->string('provinceName')->nullable();
-            $table->string('cityName')->nullable();
-            $table->string('cityCode')->nullable()->unique();
-            $table->string('parentCityCode')->nullable();
+            $table->string('hotelId')->nullable()->unique();
+            $table->string('updatedTime')->nullable();
+            $table->string('hotelSeq')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateCitysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('citys');
+        Schema::dropIfExists('hotel_list');
     }
 }
