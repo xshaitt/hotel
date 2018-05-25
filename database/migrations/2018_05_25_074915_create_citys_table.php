@@ -18,7 +18,7 @@ class CreateCitysTable extends Migration
             $table->string('provinceId')->nullable();
             $table->string('provinceName')->nullable();
             $table->string('cityName')->nullable();
-            $table->string('cityCode')->nullable();
+            $table->string('cityCode')->nullable()->unique();;
             $table->string('parentCityCode')->nullable();
             $table->timestamps();
         });

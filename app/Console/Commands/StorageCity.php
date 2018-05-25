@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\City;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 
@@ -48,12 +49,25 @@ class StorageCity extends Command
         $client = new Client();
         $response = $client->get("{$host}{$uri}?reqData={$reqData}");
         $body = json_decode($response->getBody(), true);
+        $count = 0;
         if ($body['code'] == 0) {
             //调用成功
             foreach ($body['result']['hotelGeoList'] as $city) {
-                echo $city['cityName'];
+                //保存城市数据到数据库
+                $cityModel = City::where('cityCode', $city['cityCode'])->first();
+                if (!$cityModel) {
+                    $cityModel = new City();
+                    $cityModel->provinceId = $city['provinceId'];
+                    $cityModel->provinceName = $city['provinceName'];
+                    $cityModel->cityName = $city['cityName'];
+                    $cityModel->cityCode = $city['cityCode'];
+                    $cityModel->parentCityCode = $city['parentCityCode'];
+                    $cityModel->save();
+                    $count++;
+                }
             }
         }
+        $this->info("本次一共添加了{$count}个城市");
 
     }
 }
