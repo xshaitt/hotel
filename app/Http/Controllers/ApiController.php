@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helpers;
+use App\Hotel;
+use App\HotelList;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use App\Helpers\Helpers;
 
 class ApiController extends Controller
 {
     public function qne(Request $request)
     {
-        $uri = '/api/hotel/queryHotelList.json';
-        $data['cityCode'] = 'beijing_city';
-        $hotelList = Helpers::callApi($uri, $data);
-        return $hotelList;
 
     }
 }
